@@ -25,8 +25,8 @@ function moviesAverageOfDirector(array, director) {
       (accumulator, currentValue) => accumulator + currentValue,
       0
     ) / moviesOfDirector.length;
-  console.log('EXERCICE 3 ->', +(averageScoreOfDirector.toFixed(2)));
-  return +(averageScoreOfDirector.toFixed(2));
+  console.log('EXERCICE 3 ->', +averageScoreOfDirector.toFixed(2));
+  return +averageScoreOfDirector.toFixed(2);
 }
 
 // Exercise 4:  Alphabetic order by title
@@ -70,25 +70,39 @@ function orderByYear(array) {
 
 // Exercise 6: Calculate the average of the movies in a category
 function moviesAverageByCategory(array, genre) {
-  const moviesByCategory = array.filter(
-    (item) => item.genre.includes(genre)
-  );
-
+  const moviesByCategory = array.filter((item) => item.genre.includes(genre));
 
   const scoreAverage =
     moviesByCategory.reduce(
       (accumulator, currentValue) => accumulator + currentValue.score,
       0
     ) / moviesByCategory.length;
-  return +(scoreAverage.toFixed(2));
+  return +scoreAverage.toFixed(2);
 }
 
-
 // Exercise 7: Modify the duration of movies to minutes
-function hoursToMinutes() {}
+function hoursToMinutes(array) {
+  let hoursRegExp = /\d+(?=h)/g;
+  let minRegExp = /\d+(?![hH])/g;
 
+  let newArray = array.map((item) => {
+    let newItem = { ...item };
+    let min = +newItem.duration.match(minRegExp);
+    let hours = +newItem.duration.match(hoursRegExp);
+    let newItemDuration = min + hours * 60;
+    newItem.duration = newItemDuration;
+    return newItem;
+  });
+  return newArray;
+}
 // Exercise 8: Get the best film of a year
-function bestFilmOfYear() {}
+function bestFilmOfYear(array, year) {
+  let filmsPerYear = array.filter((item) => item.year == year);
+  let heightScore = filmsPerYear.filter(
+    (item) => item.score == Math.max(...filmsPerYear.map((item) => item.score))
+  );
+  return heightScore;
+}
 
 // The following is required to make unit tests work.
 /* Environment setup. Do not modify the below code. */
